@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-goweb-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      name: my-goweb-app
+  template:
+    metadata:
+      labels:
+        name: my-goweb-app
+    spec:
+      containers:
+      - name: application
+        image: johnenoel/capstone_image
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 4000

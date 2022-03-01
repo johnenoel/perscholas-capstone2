@@ -1,0 +1,10 @@
+---
+- name: Create pods using deployment 
+  hosts: Kubernetes 
+  # become: true
+  user: ec2-user
+ 
+  tasks: 
+  - name: create a deployment
+    command: kubectl apply -f /home/ec2-user/gowebapp-deployment.yaml
+ 

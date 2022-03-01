@@ -1,0 +1,9 @@
+---
+- name: create service for deployment
+  hosts: Kubernetes
+  # become: true
+  user: ec2-user
+
+  tasks:
+  - name: create a service
+    command: kubectl apply -f /home/ec2-user/gowebapp-service.yaml

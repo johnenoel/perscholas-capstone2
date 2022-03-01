@@ -1,0 +1,232 @@
+Started by an SCM change
+Obtained jenkinsfile from git https://github.com/johnenoel/my_capstone1.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/capstone1_goweb
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/capstone1_goweb/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/johnenoel/my_capstone1.git # timeout=10
+Fetching upstream changes from https://github.com/johnenoel/my_capstone1.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.32.0'
+ > git fetch --tags --force --progress -- https://github.com/johnenoel/my_capstone1.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision f371b5504d015492c356b9e3e07a0abec9e58c4a (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f f371b5504d015492c356b9e3e07a0abec9e58c4a # timeout=10
+Commit message: "Delete k8s-info.yml"
+ > git rev-list --no-walk 19e0205f84f7ef03ef78d081cf1e20e123eeed01 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Cloning the Git repository)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/capstone1_goweb/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/johnenoel/my_capstone1.git # timeout=10
+Fetching upstream changes from https://github.com/johnenoel/my_capstone1.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.32.0'
+ > git fetch --tags --force --progress -- https://github.com/johnenoel/my_capstone1.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision f371b5504d015492c356b9e3e07a0abec9e58c4a (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f f371b5504d015492c356b9e3e07a0abec9e58c4a # timeout=10
+Commit message: "Delete k8s-info.yml"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build the image)
+[Pipeline] sh
++ docker build -t johnenoel/capstone_image .
+WARNING: Support for the legacy ~/.dockercfg configuration file and file-format is deprecated and will be removed in an upcoming release
+Sending build context to Docker daemon  182.3kB
+
+Step 1/6 : FROM golang:alpine
+ ---> e8fc0c5ad389
+Step 2/6 : RUN mkdir /app
+ ---> Using cache
+ ---> b56407bec78e
+Step 3/6 : ADD . /app
+ ---> 6049f7a27068
+Step 4/6 : WORKDIR /app
+ ---> Running in 8ecb2b9e2808
+Removing intermediate container 8ecb2b9e2808
+ ---> 8b1725c3e22d
+Step 5/6 : RUN go build -o main .
+ ---> Running in 5c4123422e6f
+Removing intermediate container 5c4123422e6f
+ ---> 248d7d2fa65c
+Step 6/6 : CMD ["/app/main"]
+ ---> Running in 905746b85b47
+Removing intermediate container 905746b85b47
+ ---> ff8308effec5
+Successfully built ff8308effec5
+Successfully tagged johnenoel/capstone_image:latest
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push the image to DockerHub)
+[Pipeline] sh
++ docker push johnenoel/capstone_image
+WARNING: Support for the legacy ~/.dockercfg configuration file and file-format is deprecated and will be removed in an upcoming release
+Using default tag: latest
+The push refers to repository [docker.io/johnenoel/capstone_image]
+39cf2a85a7f6: Preparing
+f3511d09a5a2: Preparing
+5473c3fb1b0a: Preparing
+5a3cbe708cf9: Preparing
+02edf3ee61f1: Preparing
+b6f786c730a9: Preparing
+63a6bdb95b08: Preparing
+8d3ac3489996: Preparing
+b6f786c730a9: Waiting
+63a6bdb95b08: Waiting
+8d3ac3489996: Waiting
+5473c3fb1b0a: Layer already exists
+5a3cbe708cf9: Layer already exists
+02edf3ee61f1: Layer already exists
+8d3ac3489996: Layer already exists
+b6f786c730a9: Layer already exists
+63a6bdb95b08: Layer already exists
+f3511d09a5a2: Pushed
+39cf2a85a7f6: Pushed
+latest: digest: sha256:08f17ae371ac2ed809e603a5490ce2c76c9ab8d7cb495cadaf0d95e800c4ca4e size: 1992
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Transfer the deployment & service yaml files to the target)
+[Pipeline] sh
++ scp -o StrictHostKeyChecking=no gowebapp-deployment.yaml ec2-user@54.204.128.29:/home/ec2-user
+[Pipeline] sh
++ scp -o StrictHostKeyChecking=no gowebapp-service.yaml ec2-user@54.204.128.29:/home/ec2-user
+[Pipeline] sh
++ scp -o StrictHostKeyChecking=no k8s-service.yml ec2-user@54.204.128.29:/home/ec2-user
+[Pipeline] sh
++ scp -o StrictHostKeyChecking=no k8s-deploy.yml ec2-user@54.204.128.29:/home/ec2-user
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Validate connection between both instances)
+[Pipeline] sh
++ ansible -m ping all
+[WARNING]: Platform linux on host Kubernetes is using the discovered Python
+interpreter at /usr/bin/python, but future installation of another Python
+interpreter could change this. See https://docs.ansible.com/ansible/2.9/referen
+ce_appendices/interpreter_discovery.html for more information.
+Kubernetes | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    }, 
+    "changed": false, 
+    "ping": "pong"
+}
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Make the deployment now)
+[Pipeline] sh
++ ansible-playbook k8s-deploy.yml
+
+PLAY [Create pods using deployment] ********************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host Kubernetes is using the discovered Python
+interpreter at /usr/bin/python, but future installation of another Python
+interpreter could change this. See https://docs.ansible.com/ansible/2.9/referen
+ce_appendices/interpreter_discovery.html for more information.
+ok: [Kubernetes]
+
+TASK [create a deployment] *****************************************************
+changed: [Kubernetes]
+
+PLAY RECAP *********************************************************************
+Kubernetes                 : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[Pipeline] sh
++ ansible-playbook k8s-service.yml
+
+PLAY [create service for deployment] *******************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host Kubernetes is using the discovered Python
+interpreter at /usr/bin/python, but future installation of another Python
+interpreter could change this. See https://docs.ansible.com/ansible/2.9/referen
+ce_appendices/interpreter_discovery.html for more information.
+ok: [Kubernetes]
+
+TASK [create a service] ********************************************************
+changed: [Kubernetes]
+
+PLAY RECAP *********************************************************************
+Kubernetes                 : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Show all the namespace info)
+[Pipeline] sh
++ ssh ec2-user@54.204.128.29 kubectl get all
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/my-goweb-app-68d6b77968-5fmmv   1/1     Running   0          7h50m
+pod/my-goweb-app-68d6b77968-llhn4   1/1     Running   0          7h50m
+pod/my-goweb-app-68d6b77968-tp58g   1/1     Running   0          7h50m
+pod/my-goweb-app-68d6b77968-zffx8   1/1     Running   0          7h50m
+pod/my-goweb-app-68d6b77968-zn44b   1/1     Running   0          7h50m
+
+NAME                       TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes         ClusterIP      10.96.0.1     <none>        443/TCP          20h
+service/my-goweb-service   LoadBalancer   10.98.88.90   <pending>     7000:31555/TCP   7h50m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/my-goweb-app   5/5     5            5           7h50m
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/my-goweb-app-68d6b77968   5         5         5       7h50m
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (List the exposed port)
+[Pipeline] sh
++ ssh ec2-user@54.204.128.29 minikube service my-goweb-service
+|-----------|------------------|-------------|---------------------------|
+| NAMESPACE |       NAME       | TARGET PORT |            URL            |
+|-----------|------------------|-------------|---------------------------|
+| default   | my-goweb-service | tcp/7000    | http://172.31.82.69:31555 |
+|-----------|------------------|-------------|---------------------------|
+* Opening service default/my-goweb-service in default browser...
+  http://172.31.82.69:31555
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Testing: curling the url)
+[Pipeline] sh
++ curl http://172.31.82.69:31555
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100   102  100   102    0     0  50345      0 --:--:-- --:--:-- --:--:--   99k
+Welcome to Per Scholas Cloud DevOps Program
+Congratulations my friend
+You are now a DevOps Engineer!!!
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

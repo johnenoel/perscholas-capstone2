@@ -1,0 +1,55 @@
+pipeline { 
+      agent any
+         stages {
+               stage('Cloning the Git repository') {
+               steps {
+               checkout scm
+               }
+         }
+         stage('Build the image') {
+               steps {
+               sh "docker build -t johnenoel/capstone_image ."
+               }
+         }
+         stage('Push the image to DockerHub') {
+               steps {
+               sh 'docker push johnenoel/capstone_image'
+               }
+         }
+         stage('Transfer the deployment & service yaml files to the target') {
+               steps {
+               sh "scp -o StrictHostKeyChecking=no gowebapp-deployment.yaml ec2-user@54.204.128.29:/home/ec2-user"
+               sh "scp -o StrictHostKeyChecking=no gowebapp-service.yaml ec2-user@54.204.128.29:/home/ec2-user"
+               sh "scp -o StrictHostKeyChecking=no k8s-service.yml ec2-user@54.204.128.29:/home/ec2-user"
+               sh "scp -o StrictHostKeyChecking=no k8s-deploy.yml ec2-user@54.204.128.29:/home/ec2-user"
+               }
+         } 
+         stage('Validate connection between both instances') {
+               steps {
+               sh 'ansible -m ping all'
+               }
+         } 
+         stage('Make the deployment now') {
+               steps {
+               sh 'ansible-playbook k8s-deploy.yml'
+               sh 'ansible-playbook k8s-service.yml'
+               }
+         } 
+         stage('Show all the namespace info') {
+               steps {
+               sh 'ssh ec2-user@54.204.128.29 kubectl get all'
+               }
+         }
+          stage('List the exposed port') {
+               steps {
+               sh 'ssh ec2-user@54.204.128.29 minikube service my-goweb-service'
+               }
+         }
+         stage('Testing: curling the url') {
+              steps {
+              sh 'curl http://172.31.82.69:31555'
+              }
+         }
+    }
+}
+
