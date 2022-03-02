@@ -13,8 +13,8 @@ resource "aws_instance" "jnoel_server" {
 }
 
 resource "aws_security_group" "my_security_group" {
-  name        =  jn_security_group
-  default     =  "jn-jenkins-security-group"
+  name        =  "jn_security_group"
+  #default     =  "jn-jenkins-security-group"
 
   description = "security group for Ec2 instance"
 
