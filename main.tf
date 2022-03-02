@@ -35,15 +35,17 @@ resource "aws_security_group" "my_security_group" {
 }
 
 # Create AWS ec2 instance
-resource "aws_instance" "myFirstInstance" {
+resource "aws_instance" "minikube" {
   ami      = "ami-0661cd3308ec33aaa"
   key_name = "aws_jn_keypair"
   instance_type = "t2.medium"
   security_groups= [var.security_group]
+  tags = {
+    Name = "minikube"
 }
 
 # Create Elastic IP address
-resource "aws_eip" "myFirstInstance" {
+resource "aws_eip" "minikube" {
   vpc      = true
   instance = aws_instance.myFirstInstance.id
 tags= {
