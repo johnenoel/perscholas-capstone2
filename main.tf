@@ -36,12 +36,12 @@ resource "aws_security_group" "my_security_group" {
 
 # Create AWS ec2 instance
 resource "aws_instance" "myFirstInstance" {
-  ami           = var.ami_id
-  key_name = var.key_name
-  instance_type = var.instance_type
+  ami      = "ami-0661cd3308ec33aaa"
+  key_name = "aws_jn_keypair"
+  instance_type = "t2.medium"
   security_groups= [var.security_group]
   tags= {
-    Name = var.tag_name
+    Name = k8s-mini
   }
 }
 
