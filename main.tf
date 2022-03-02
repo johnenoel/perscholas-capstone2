@@ -42,6 +42,7 @@ resource "aws_instance" "minikube" {
   security_groups= [var.security_group]
   tags = {
     Name = "minikube"
+  }
 }
 
 # Create Elastic IP address
