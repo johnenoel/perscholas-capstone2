@@ -1,10 +1,32 @@
-provider "aws" {
-  region = var.aws_region
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.27"
+    }
+  }
+
+  required_version = ">= 0.14.9"
 }
 
-#Create security group with firewall rules
+provider "aws" {
+  region     = "us-east-2"
+ 
+}
+
+resource "aws_instance" "jnoel_server" {
+  ami           = "ami-0661cd3308ec33aaa"
+  instance_type = "t2.medium"
+  key_name = "aws_jn_keypair"
+  tags = {
+    Name = "k8s-minikube"
+  }
+}
+
 resource "aws_security_group" "my_security_group" {
-  name        = var.security_group
+  name        =  jn_security_group
+  default     =  "jn-jenkins-security-group"
+
   description = "security group for Ec2 instance"
 
   ingress {
@@ -29,27 +51,7 @@ resource "aws_security_group" "my_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags= {
-    Name = var.security_group
-  }
-}
-
-# Create AWS ec2 instance
-resource "aws_instance" "myFirstInstance" {
-  ami           = var.ami_id
-  key_name = var.key_name
-  instance_type = var.instance_type
-  security_groups= [var.security_group]
-  tags= {
-    Name = var.tag_name
-  }
-}
-
-# Create Elastic IP address
-resource "aws_eip" "myFirstInstance" {
-  vpc      = true
-  instance = aws_instance.myFirstInstance.id
-tags= {
-    Name = "my_elastic_ip"
-  }
+  #tags= {
+    #Name = mamoun_security_group
+  #}
 }
