@@ -40,9 +40,6 @@ resource "aws_instance" "myFirstInstance" {
   key_name = "aws_jn_keypair"
   instance_type = "t2.medium"
   security_groups= [var.security_group]
-  tags= {
-    Name = k8s-mini
-  }
 }
 
 # Create Elastic IP address
