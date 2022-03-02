@@ -48,7 +48,7 @@ resource "aws_instance" "minikube" {
 # Create Elastic IP address
 resource "aws_eip" "minikube" {
   vpc      = true
-  instance = aws_instance.myFirstInstance.id
+  instance = aws_instance.minikube.id
 tags= {
     Name = "my_elastic_ip"
   }
