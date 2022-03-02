@@ -1,46 +1,26 @@
- provider "aws" {
-  region     = "us-east-2"
- 
+#terraform {
+#  required_providers {
+#    aws = {
+#      source  = "hashicorp/aws"
+#      version = "~> 3.27"
+#    }
+#  }
+#
+#  required_version = ">= 0.14.9"
+#}
+
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
 }
 
-resource "aws_instance" "jnoel_server" {
-  ami           = "ami-0661cd3308ec33aaa"
+resource "aws_instance" "app_server" {
+  #ami           = "ami-830c94e3"
+  ami           = "ami-08e4e35cccc6189f4"
   instance_type = "t2.medium"
-  key_name = "aws_jn_keypair"
+  key_name      = "aws_jn_keypair"
+
   tags = {
-    Name = "k8s-minikube"
+    Name = "ExampleAppServerInstance"
   }
-}
-
-resource "aws_security_group" "my_security_group" {
-  name        =  "jn_security_group"
-  #default     =  "jn-jenkins-security-group"
-
-  description = "security group for Ec2 instance"
-
-  ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
- ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
- # outbound from jenkis server
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  #tags= {
-    #Name = mamoun_security_group
-  #}
 }
