@@ -1,6 +1,6 @@
 ## Deploying & Monitoring a Golang Application
 
-## TOOLS
+## Tools that I use
 1-	Source Code Management : Git/GitHub
 2-	CI/CD Pipeline : Jenkins
 3-	Target to host the app: Docker/Docker hub
@@ -10,7 +10,7 @@
 7-	Monitoring tools: Elk + Metric beat
 8-	Software package: Golang
 
-## WORKFLOW
+## The workflow
 1-	Develop the Application
 2-	Commit & push the code to GitHub
 3-	Create Jenkins jobs
