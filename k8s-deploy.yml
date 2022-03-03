@@ -1,6 +1,6 @@
 ---
 - name: Create pods using deployment 
-  hosts: Kubernetes 
+  hosts: 34.201.52.21 
   # become: true
   user: ec2-user
  

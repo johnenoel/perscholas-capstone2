@@ -18,10 +18,10 @@ pipeline {
          }
          stage('Transfer the deployment & service yaml files to the target') {
                steps {
-               sh "scp -o StrictHostKeyChecking=no gowebapp-deployment.yaml ec2-user@54.204.128.29:/home/ec2-user"
-               sh "scp -o StrictHostKeyChecking=no gowebapp-service.yaml ec2-user@54.204.128.29:/home/ec2-user"
-               sh "scp -o StrictHostKeyChecking=no k8s-service.yml ec2-user@54.204.128.29:/home/ec2-user"
-               sh "scp -o StrictHostKeyChecking=no k8s-deploy.yml ec2-user@54.204.128.29:/home/ec2-user"
+               sh "scp -o StrictHostKeyChecking=no gowebapp-deployment.yaml ec2-user@34.201.52.21:/home/ec2-user"
+               sh "scp -o StrictHostKeyChecking=no gowebapp-service.yaml ec2-user@34.201.52.21:/home/ec2-user"
+               sh "scp -o StrictHostKeyChecking=no k8s-service.yml ec2-user@34.201.52.21:/home/ec2-user"
+               sh "scp -o StrictHostKeyChecking=no k8s-deploy.yml ec2-user@34.201.52.21:/home/ec2-user"
                }
          } 
          stage('Validate connection between both instances') {
