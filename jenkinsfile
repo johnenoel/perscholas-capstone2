@@ -40,11 +40,6 @@ pipeline {
                sh 'ssh ec2-user@54.204.128.29 kubectl get all'
                }
          }
-         stage('Testing: curling the url') {
-              steps {
-              sh 'curl http://172.31.82.69:31555'
-              }
-         }
     }
 }
 
