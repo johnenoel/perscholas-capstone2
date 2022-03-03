@@ -37,8 +37,10 @@ d.	Job 4 – uses create & push the image to Docker Hub, deploy the application 
 ## The Terraform script  to create the instance
 ![image](https://user-images.githubusercontent.com/39747014/156651095-95c69865-44e8-42f6-a9e4-2b41ca90f871.png)
 
+## The created instance (k8s-minikube)
 ![image](https://user-images.githubusercontent.com/39747014/156650639-61ed0925-e064-4aac-b421-138335db2a89.png)
 
+## The Jenkins job
 ![image](https://user-images.githubusercontent.com/39747014/156651169-c7883c94-1fd6-40cc-b9ac-41279f602645.png)
 
 ## Job 2 -- Running Ansible to install Minikube
