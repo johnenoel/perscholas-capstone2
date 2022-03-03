@@ -21,13 +21,14 @@ d.	Job 4 – uses create & push the image to Docker Hub, deploy the application 
 4-	Use a browser to view the App
 5-	Use Elkstack and metric beat to collect data
 
+## My DevOps Diagram
 ![image](https://user-images.githubusercontent.com/39747014/156647963-92aa2f96-5b96-4495-9d96-61ffeba3ec48.png)
 
+##The Network
 ![image](https://user-images.githubusercontent.com/39747014/156648067-94954a9c-9c84-4e11-8782-ff3154e5686c.png)
 
 ##The Dockerfile
 ![image](https://user-images.githubusercontent.com/39747014/156650326-015bfa54-0897-4438-83e0-21b1b6603b93.png)
-
 
 ##The Golang Script
 ![image](https://user-images.githubusercontent.com/39747014/156650291-27d6ed7f-69d5-4ace-a5bc-81e416ae9e04.png)
