@@ -1,6 +1,6 @@
-###Deploying & Monitoring a Golang Application
+### Deploying & Monitoring a Golang Application
 
-##TOOLS
+## TOOLS
 1-	Source Code Management : Git/GitHub
 2-	CI/CD Pipeline : Jenkins
 3-	Target to host the app: Docker/Docker hub
@@ -10,7 +10,7 @@
 7-	Monitoring tools: Elk + Metric beat
 8-	Software package: Golang
 
-##WORKFLOW
+## WORKFLOW
 1-	Develop the Application
 2-	Commit & push the code to GitHub
 3-	Create Jenkins jobs
@@ -37,7 +37,6 @@ d.	Job 4 – uses create & push the image to Docker Hub, deploy the application 
 ## The Terraform script  to create the instance
 ![image](https://user-images.githubusercontent.com/39747014/156651095-95c69865-44e8-42f6-a9e4-2b41ca90f871.png)
 
-
 ![image](https://user-images.githubusercontent.com/39747014/156650639-61ed0925-e064-4aac-b421-138335db2a89.png)
 
 ![image](https://user-images.githubusercontent.com/39747014/156651169-c7883c94-1fd6-40cc-b9ac-41279f602645.png)
@@ -53,13 +52,14 @@ d.	Job 4 – uses create & push the image to Docker Hub, deploy the application 
 ![image](https://user-images.githubusercontent.com/39747014/156652204-56376f36-cefe-4c60-a122-0553f34b9dba.png)
 
 ## Job 3 -- Deploying the application to Test Kubernetes
+
 ## The jenkins job
 ![image](https://user-images.githubusercontent.com/39747014/156652288-276f4ac6-0ba1-4b03-a01b-200123956812.png)
 
 ## Checking the namespace
 ![image](https://user-images.githubusercontent.com/39747014/156652352-3196d774-df06-4e31-8de7-cfa644cd31e0.png)
 
-## Verify teh app is successfully deployed 
+## Verify the app is successfully deployed 
 ![image](https://user-images.githubusercontent.com/39747014/156652408-419699b9-a429-4e5e-a76a-6ba9fed8cc46.png)
 
 ## Job 4 -- Deploying the application to Production Kubernetes (54.204.128.29)
@@ -71,7 +71,7 @@ d.	Job 4 – uses create & push the image to Docker Hub, deploy the application 
 ## Verify the namespace
 ![image](https://user-images.githubusercontent.com/39747014/156652596-3b6cfab2-5da0-4aae-a749-f2e48bdfc85b.png)
 
-## Verify teh app is successfully deployed 
+## Verify the app is successfully deployed 
 ![image](https://user-images.githubusercontent.com/39747014/156652671-24bc93d1-30c3-46f2-8a49-8041b8877255.png)
 
 
