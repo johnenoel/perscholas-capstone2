@@ -1,4 +1,4 @@
-### Deploying & Monitoring a Golang Application
+## Deploying & Monitoring a Golang Application
 
 ## TOOLS
 1-	Source Code Management : Git/GitHub
